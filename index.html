@@ -1,0 +1,105 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Revit Text Manager - Streamline Your Text Management in Revit</title>
+  <meta name="description" content="A powerful Autodesk Revit plugin for architects and BIM teams to find, replace, highlight, and manage all text in your models with ease." />
+  <meta name="author" content="Revit Text Manager" />
+
+  <meta property="og:title" content="Revit Text Manager - Streamline Your Text Management in Revit" />
+  <meta property="og:description" content="A powerful Autodesk Revit plugin for architects and BIM teams to find, replace, highlight, and manage all text in your models with ease." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@revittextmanager" />
+  <meta name="twitter:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      /* padding: 2rem; */
+      /* max-width: 600px; */
+      width: 100%;
+      margin: auto;
+    }
+    form {
+      margin-top: 2rem;
+      display: flex;
+      gap: 1rem;
+      flex-direction: column;
+    }
+    input[type="email"] {
+      padding: 0.75rem;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+    button {
+      padding: 0.75rem;
+      font-size: 1rem;
+      background-color: #0056d2;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    #response-message {
+      margin-top: 1rem;
+      font-weight: 500;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="root"></div>
+  <!-- IMPORTANT: DO NOT REMOVE THIS SCRIPT TAG OR THIS VERY COMMENT! -->
+  <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
+  <script type="module" src="/src/main.tsx"></script>
+
+  <!-- <form id="waitlist-form">
+    <input type="email" id="email" placeholder="Enter your email" required />
+    <button type="submit">Join Waitlist</button>
+  </form>
+  <p id="response-message"></p> -->
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      // Create the Supabase client inside the event listener
+      const { createClient } = supabase;
+      const supabaseClient = createClient(
+        'https://pxhoqxpvzthcvpznriiy.supabase.co',
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB4aG9xeHB2enRoY3Zwem5yaWl5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mjk0ODY3OTYsImV4cCI6MjA0NTA2Mjc5Nn0.imep9aBQD8uU_s3sdF_13qMzJpho7mBNsaOUFSp3QKg'
+      );
+
+      document.getElementById('waitlist-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const email = document.getElementById('email').value;
+
+        const { data, error } = await supabaseClient
+          .from('revit-text-manager-email')
+          .insert([{ email }]);
+
+          console.log("email details",data);
+          
+
+        const message = document.getElementById('response-message');
+        if (error) {
+          message.textContent = "❌ Already subscribed or error occurred.";
+          console.error(error);
+        } else {
+          message.textContent = "✅ Successfully joined the waitlist!";
+          document.getElementById('waitlist-form').reset();
+        }
+      });
+    });
+  </script>
+</body>
+</html>
